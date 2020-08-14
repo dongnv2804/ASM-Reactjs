@@ -1,20 +1,37 @@
 import React, { Component } from "react";
 import CartItem from "./CartItem";
-
+import api from "../../Api";
+import { Link } from "react-router-dom";
 class Cart extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      carts: [],
+    };
+  }
+  componentDidMount() {
+    api
+      .get("/cart")
+      .then((res) => {
+        const carts = res.data;
+        if (carts != null) {
+          this.setState({ carts: carts });
+        }
+      })
+      .catch((err) => console.log(err));
+  }
   render() {
     return (
       <div>
         <div className="container">
           <div className="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-            <a href="index.html" className="stext-109 cl8 hov-cl1 trans-04">
+            <Link to="/" className="stext-109 cl8 hov-cl1 trans-04">
               Home
               <i
                 className="fa fa-angle-right m-l-9 m-r-10"
                 aria-hidden="true"
               ></i>
-            </a>
-
+            </Link>
             <span className="stext-109 cl4">Shoping Cart</span>
           </div>
         </div>
@@ -35,7 +52,9 @@ class Cart extends Component {
                         </tr>
                       </thead>
                       <tbody>
-                        <CartItem />
+                        {this.state.carts.map((item) => {
+                          return <CartItem key={item.id} value={item} />;
+                        })}
                       </tbody>
                     </table>
                   </div>

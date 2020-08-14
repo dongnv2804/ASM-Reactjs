@@ -9,8 +9,8 @@ class CartItem extends Component {
             <img src="images/item-cart-04.jpg" alt="IMG" />
           </div>
         </td>
-        <td className="column-2">Fresh Strawberries</td>
-        <td className="column-3">$ 36.00</td>
+        <td className="column-2">{this.props.value.name}</td>
+        <td className="column-3">$ {this.props.value.price}</td>
         <td className="column-4">
           <div className="wrap-num-product flex-w m-l-auto m-r-0">
             <div className="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
@@ -20,14 +20,16 @@ class CartItem extends Component {
               className="mtext-104 cl3 txt-center num-product"
               type="number"
               name="num-product1"
-              defaultValue="1"
+              defaultValue={this.props.value.quantity}
             />
             <div className="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
               <i className="fs-16 zmdi zmdi-plus"></i>
             </div>
           </div>
         </td>
-        <td className="column-5">$ 36.00</td>
+        <td className="column-5">
+          $ {this.props.value.price * this.props.value.quantity}
+        </td>
       </tr>
     );
   }
