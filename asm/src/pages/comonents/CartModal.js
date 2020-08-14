@@ -1,7 +1,26 @@
 import React, { Component } from "react";
-
+import ItemCartModal from "./ItemCartModal";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  NavLink,
+} from "react-router-dom";
+import Cart from "./Cart";
 class CartModal extends Component {
+  componentDidMount() {}
+
+  shouldComponentUpdate = (nextProps, nextState) => {
+    if (JSON.stringify(this.props.carts) == JSON.stringify(nextProps.carts)) {
+      return false;
+    }
+    return true;
+  };
+
   render() {
+    let elements = this.props.carts.map((value) => {
+      return <ItemCartModal key={value.id} item={value}></ItemCartModal>;
+    });
     return (
       <div className="wrap-header-cart js-panel-cart">
         <div className="s-full js-hide-cart"></div>
@@ -13,37 +32,24 @@ class CartModal extends Component {
             </div>
           </div>
           <div className="header-cart-content flex-w js-pscroll">
-            <ul className="header-cart-wrapitem w-full">
-              <li className="header-cart-item flex-w flex-t m-b-12">
-                <div className="header-cart-item-img">
-                  <img src="images/item-cart-01.jpg" alt="IMG" />
-                </div>
-                <div className="header-cart-item-txt p-t-8">
-                  <a
-                    href="#"
-                    className="header-cart-item-name m-b-18 hov-cl1 trans-04"
-                  >
-                    White Shirt Pleat
-                  </a>
-                  <span className="header-cart-item-info">1 x $19.00</span>
-                </div>
-              </li>
-            </ul>
+            <ul className="header-cart-wrapitem w-full">{elements}</ul>
             <div className="w-full">
-              <div className="header-cart-total w-full p-tb-40">Total: $75.00</div>
+              <div className="header-cart-total w-full p-tb-40">
+                Total: $75.00
+              </div>
               <div className="header-cart-buttons flex-w w-full">
-                <a
-                  href="shoping-cart.html"
+                <Link
+                  to="/cart"
                   className="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10"
                 >
                   View Cart
-                </a>
-                <a
-                  href="shoping-cart.html"
+                </Link>
+                <Link
+                  to="/cart"
                   className="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10"
                 >
                   Check Out
-                </a>
+                </Link>
               </div>
             </div>
           </div>

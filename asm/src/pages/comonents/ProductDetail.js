@@ -1,6 +1,22 @@
 import React, { Component } from "react";
-
+import api from "../../Api";
 class ProductDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      product: {},
+    };
+  }
+  componentDidMount() {
+    api
+      .get(`/product/getdetailproduct/${this.props.match.params.id}`)
+      .then((res) => {
+        if (res.data != null) {
+          this.setState({ product: res.data });
+        }
+      })
+      .catch((err) => console.log(err));
+  }
   render() {
     return (
       <div id="detail-product">
@@ -99,10 +115,12 @@ class ProductDetail extends Component {
               <div className="col-md-6 col-lg-5 p-b-30">
                 <div className="p-r-50 p-t-5 p-lr-0-lg">
                   <h4 className="mtext-105 cl2 js-name-detail p-b-14">
-                    Lightweight Jacket
+                    {this.state.product.name}
                   </h4>
 
-                  <span className="mtext-106 cl2">$58.79</span>
+                  <span className="mtext-106 cl2">
+                    ${this.state.product.price}
+                  </span>
 
                   <p className="stext-102 cl3 p-t-23">
                     Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus
@@ -115,12 +133,13 @@ class ProductDetail extends Component {
 
                       <div className="size-204 respon6-next">
                         <div className="rs1-select2 bor8 bg0">
-                          <select className="js-select2" name="time">
+                          <select className="js-select2" name="size">
                             <option>Choose an option</option>
-                            <option>Size S</option>
-                            <option>Size M</option>
-                            <option>Size L</option>
-                            <option>Size XL</option>
+                            {this.state.product.details.map((item) => {
+                              return (
+                                <option value={item.size}>{item.size}</option>
+                              );
+                            })}
                           </select>
                           <div className="dropDownSelect2"></div>
                         </div>
@@ -132,12 +151,13 @@ class ProductDetail extends Component {
 
                       <div className="size-204 respon6-next">
                         <div className="rs1-select2 bor8 bg0">
-                          <select className="js-select2" name="time">
+                          <select className="js-select2" name="color">
                             <option>Choose an option</option>
-                            <option>Red</option>
-                            <option>Blue</option>
-                            <option>White</option>
-                            <option>Grey</option>
+                            {this.state.product.details.map((item) => {
+                              return (
+                                <option value={item.color}>{item.color}</option>
+                              );
+                            })}
                           </select>
                           <div className="dropDownSelect2"></div>
                         </div>
@@ -154,7 +174,7 @@ class ProductDetail extends Component {
                           <input
                             className="mtext-104 cl3 txt-center num-product"
                             type="number"
-                            name="num-product"
+                            name="quantity"
                             value="1"
                           />
 
