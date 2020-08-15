@@ -30,7 +30,7 @@ class ListProduct extends Component {
 
   render() {
     let elements = this.state.listproducts.map((value) => {
-      return <Product key={value.id} item={value} />;
+      return <Product key={value._id} id={value._id} item={value} />;
     });
     return (
       <section className="bg0 p-t-23 p-b-140">
