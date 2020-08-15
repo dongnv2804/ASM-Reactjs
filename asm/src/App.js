@@ -82,11 +82,13 @@ class App extends Component {
           ></Route>
           <Route
             path="/product"
+            exact
             component={(match) => <ListProduct match={match} />}
           ></Route>
           <Route path="/cart" component={() => <Cart />}></Route>
           <Route
             path="/product/:id"
+            exact
             component={(match) => (
               <ProductDetail addtocart={this.AddToCart} match={match} />
             )}

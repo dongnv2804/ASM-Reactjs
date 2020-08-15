@@ -4,12 +4,13 @@ class ProductDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      product: {},
+      product: null,
     };
   }
   componentDidMount() {
+    console.log(this.props.match.match.params.id);
     api
-      .get(`/product/getdetailproduct/${this.props.match.params.id}`)
+      .get(`/product/getdetailproduct/${this.props.match.match.params.id}`)
       .then((res) => {
         if (res.data != null) {
           this.setState({ product: res.data });
@@ -17,7 +18,25 @@ class ProductDetail extends Component {
       })
       .catch((err) => console.log(err));
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      JSON.stringify(this.state.product) == JSON.stringify(nextState.product)
+    ) {
+      return false;
+    }
+    return true;
+  }
   render() {
+    let optionsizes = undefined;
+    let optioncolor = undefined;
+    if (this.state.product != null) {
+      optionsizes = this.state.product.details.map((item) => {
+        return <option defaultValue={item.size}>{item.size}</option>;
+      });
+      optioncolor = this.state.product.details.map((item) => {
+        return <option defaultValue={item.color}>{item.color}</option>;
+      });
+    }
     return (
       <div id="detail-product">
         <div className="container">
@@ -115,11 +134,15 @@ class ProductDetail extends Component {
               <div className="col-md-6 col-lg-5 p-b-30">
                 <div className="p-r-50 p-t-5 p-lr-0-lg">
                   <h4 className="mtext-105 cl2 js-name-detail p-b-14">
-                    {this.state.product.name}
+                    {this.state.product !== null
+                      ? this.state.product.name
+                      : undefined}
                   </h4>
 
                   <span className="mtext-106 cl2">
-                    ${this.state.product.price}
+                    ${this.state.product !== null
+                      ? this.state.product.price
+                      : undefined}
                   </span>
 
                   <p className="stext-102 cl3 p-t-23">
@@ -135,11 +158,7 @@ class ProductDetail extends Component {
                         <div className="rs1-select2 bor8 bg0">
                           <select className="js-select2" name="size">
                             <option>Choose an option</option>
-                            {this.state.product.details.map((item) => {
-                              return (
-                                <option value={item.size}>{item.size}</option>
-                              );
-                            })}
+                            {optionsizes}
                           </select>
                           <div className="dropDownSelect2"></div>
                         </div>
@@ -153,11 +172,7 @@ class ProductDetail extends Component {
                         <div className="rs1-select2 bor8 bg0">
                           <select className="js-select2" name="color">
                             <option>Choose an option</option>
-                            {this.state.product.details.map((item) => {
-                              return (
-                                <option value={item.color}>{item.color}</option>
-                              );
-                            })}
+                            {optioncolor}
                           </select>
                           <div className="dropDownSelect2"></div>
                         </div>
@@ -175,7 +190,7 @@ class ProductDetail extends Component {
                             className="mtext-104 cl3 txt-center num-product"
                             type="number"
                             name="quantity"
-                            value="1"
+                            defaultValue="1"
                           />
 
                           <div className="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
