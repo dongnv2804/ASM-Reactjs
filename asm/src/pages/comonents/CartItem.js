@@ -6,7 +6,10 @@ class CartItem extends Component {
       <tr className="table_row">
         <td className="column-1">
           <div className="how-itemcart1">
-            <img src="images/item-cart-04.jpg" alt="IMG" />
+            <img
+              src={"images/products/" + this.props.value.imgpath}
+              alt="IMG"
+            />
           </div>
         </td>
         <td className="column-2">{this.props.value.name}</td>

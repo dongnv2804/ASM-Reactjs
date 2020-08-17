@@ -6,7 +6,7 @@ class ItemCartModal extends Component {
     return (
       <li className="header-cart-item flex-w flex-t m-b-12">
         <div className="header-cart-item-img">
-          <img src="images/item-cart-01.jpg" alt="IMG" />
+          <img src={"images/products/" + this.props.item.imgpath} alt="IMG" />
         </div>
         <div className="header-cart-item-txt p-t-8">
           <Link

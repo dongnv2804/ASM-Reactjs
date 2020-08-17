@@ -18,9 +18,19 @@ class CartModal extends Component {
   };
 
   render() {
+    let totalprice = 0;
+    this.props.carts.map((value) => {
+      totalprice += parseInt(value.price) * parseInt(value.quantity);
+    });
     let elements = this.props.carts.map((value) => {
       return <ItemCartModal key={value.id} item={value}></ItemCartModal>;
     });
+    let elementcartempty = (
+      <div className="row">
+        <h2 className="text-center col-12 mb-5">Cart is Empty!</h2>
+      </div>
+    );
+    console.log(this.props.carts);
     return (
       <div className="wrap-header-cart js-panel-cart">
         <div className="s-full js-hide-cart"></div>
@@ -32,10 +42,11 @@ class CartModal extends Component {
             </div>
           </div>
           <div className="header-cart-content flex-w js-pscroll">
+            {this.props.carts.lenght > 0 ? elementcartempty : undefined}
             <ul className="header-cart-wrapitem w-full">{elements}</ul>
             <div className="w-full">
               <div className="header-cart-total w-full p-tb-40">
-                Total: $75.00
+                Total: {totalprice} VND
               </div>
               <div className="header-cart-buttons flex-w w-full">
                 <Link

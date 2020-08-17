@@ -57,7 +57,9 @@ class ProductDetail extends Component {
               ></i>
             </a>
 
-            <span className="stext-109 cl4">Lightweight Jacket</span>
+            <span className="stext-109 cl4">
+              {this.state.product != null ? this.state.product.name : undefined}
+            </span>
           </div>
         </div>
         <section className="sec-product-detail bg0 p-t-65 p-b-60">
@@ -72,17 +74,32 @@ class ProductDetail extends Component {
                     <div className="slick3 gallery-lb">
                       <div
                         className="item-slick3"
-                        data-thumb="images/product-detail-01.jpg"
+                        data-thumb={
+                          this.state.product != null
+                            ? "images/products/" +
+                              this.state.product.imgpaths[0]
+                            : undefined
+                        }
                       >
                         <div className="wrap-pic-w pos-relative">
                           <img
-                            src="images/product-detail-01.jpg"
+                            src={
+                              this.state.product != null
+                                ? "images/products/" +
+                                  this.state.product.imgpaths[0]
+                                : undefined
+                            }
                             alt="IMG-PRODUCT"
                           />
 
                           <a
                             className="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                            href="images/product-detail-01.jpg"
+                            href={
+                              this.state.product != null
+                                ? "images/products/" +
+                                  this.state.product.imgpaths[0]
+                                : undefined
+                            }
                           >
                             <i className="fa fa-expand"></i>
                           </a>
@@ -91,17 +108,32 @@ class ProductDetail extends Component {
 
                       <div
                         className="item-slick3"
-                        data-thumb="images/product-detail-02.jpg"
+                        data-thumb={
+                          this.state.product != null
+                            ? "images/products/" +
+                              this.state.product.imgpaths[1]
+                            : undefined
+                        }
                       >
                         <div className="wrap-pic-w pos-relative">
                           <img
-                            src="images/product-detail-02.jpg"
+                            src={
+                              this.state.product != null
+                                ? "images/products/" +
+                                  this.state.product.imgpaths[1]
+                                : undefined
+                            }
                             alt="IMG-PRODUCT"
                           />
 
                           <a
                             className="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                            href="images/product-detail-02.jpg"
+                            href={
+                              this.state.product != null
+                                ? "images/products/" +
+                                  this.state.product.imgpaths[1]
+                                : undefined
+                            }
                           >
                             <i className="fa fa-expand"></i>
                           </a>
@@ -110,17 +142,32 @@ class ProductDetail extends Component {
 
                       <div
                         className="item-slick3"
-                        data-thumb="images/product-detail-03.jpg"
+                        data-thumb={
+                          this.state.product != null
+                            ? "images/products/" +
+                              this.state.product.imgpaths[2]
+                            : undefined
+                        }
                       >
                         <div className="wrap-pic-w pos-relative">
                           <img
-                            src="images/product-detail-03.jpg"
+                            src={
+                              this.state.product != null
+                                ? "images/products/" +
+                                  this.state.product.imgpaths[2]
+                                : undefined
+                            }
                             alt="IMG-PRODUCT"
                           />
 
                           <a
                             className="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                            href="images/product-detail-03.jpg"
+                            href={
+                              this.state.product != null
+                                ? "images/products/" +
+                                  this.state.product.imgpaths[2]
+                                : undefined
+                            }
                           >
                             <i className="fa fa-expand"></i>
                           </a>
@@ -140,7 +187,8 @@ class ProductDetail extends Component {
                   </h4>
 
                   <span className="mtext-106 cl2">
-                    ${this.state.product !== null
+                    $
+                    {this.state.product !== null
                       ? this.state.product.price
                       : undefined}
                   </span>
@@ -149,62 +197,102 @@ class ProductDetail extends Component {
                     Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus
                     ligula. Mauris consequat ornare feugiat.
                   </p>
+                  <form onSubmit={(e) => this.props.addtocart(e)}>
+                    {/* input value hidden */}
+                    <input
+                      hidden
+                      name="name"
+                      defaultValue={
+                        this.state.product != null
+                          ? this.state.product.name
+                          : undefined
+                      }
+                    />
+                    <input
+                      hidden
+                      name="imgpath"
+                      defaultValue={
+                        this.state.product != null
+                          ? this.state.product.imgpaths[0]
+                          : undefined
+                      }
+                    />
+                    <input
+                      hidden
+                      name="price"
+                      defaultValue={
+                        this.state.product != null
+                          ? this.state.product.price
+                          : undefined
+                      }
+                    />
+                    <input
+                      hidden
+                      name="id"
+                      defaultValue={
+                        this.state.product != null
+                          ? this.state.product._id
+                          : undefined
+                      }
+                    />
+                    <div className="p-t-33">
+                      <div className="flex-w flex-r-m p-b-10">
+                        <div className="size-203 flex-c-m respon6">Size</div>
 
-                  <div className="p-t-33">
-                    <div className="flex-w flex-r-m p-b-10">
-                      <div className="size-203 flex-c-m respon6">Size</div>
-
-                      <div className="size-204 respon6-next">
-                        <div className="rs1-select2 bor8 bg0">
-                          <select className="js-select2" name="size">
-                            <option>Choose an option</option>
-                            {optionsizes}
-                          </select>
-                          <div className="dropDownSelect2"></div>
+                        <div className="size-204 respon6-next">
+                          <div className="rs1-select2 bor8 bg0">
+                            <select className="js-select2" name="size">
+                              <option>Choose an option</option>
+                              {optionsizes}
+                            </select>
+                            <div className="dropDownSelect2"></div>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div className="flex-w flex-r-m p-b-10">
-                      <div className="size-203 flex-c-m respon6">Color</div>
+                      <div className="flex-w flex-r-m p-b-10">
+                        <div className="size-203 flex-c-m respon6">Color</div>
 
-                      <div className="size-204 respon6-next">
-                        <div className="rs1-select2 bor8 bg0">
-                          <select className="js-select2" name="color">
-                            <option>Choose an option</option>
-                            {optioncolor}
-                          </select>
-                          <div className="dropDownSelect2"></div>
+                        <div className="size-204 respon6-next">
+                          <div className="rs1-select2 bor8 bg0">
+                            <select className="js-select2" name="color">
+                              <option>Choose an option</option>
+                              {optioncolor}
+                            </select>
+                            <div className="dropDownSelect2"></div>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div className="flex-w flex-r-m p-b-10">
-                      <div className="size-204 flex-w flex-m respon6-next">
-                        <div className="wrap-num-product flex-w m-r-20 m-tb-10">
-                          <div className="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                            <i className="fs-16 zmdi zmdi-minus"></i>
+                      <div className="flex-w flex-r-m p-b-10">
+                        <div className="size-204 flex-w flex-m respon6-next">
+                          <div className="wrap-num-product flex-w m-r-20 m-tb-10">
+                            <div className="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+                              <i className="fs-16 zmdi zmdi-minus"></i>
+                            </div>
+
+                            <input
+                              className="mtext-104 cl3 txt-center num-product"
+                              type="number"
+                              name="quantity"
+                              defaultValue="1"
+                            />
+
+                            <div className="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+                              <i className="fs-16 zmdi zmdi-plus"></i>
+                            </div>
                           </div>
 
-                          <input
-                            className="mtext-104 cl3 txt-center num-product"
-                            type="number"
-                            name="quantity"
-                            defaultValue="1"
-                          />
-
-                          <div className="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                            <i className="fs-16 zmdi zmdi-plus"></i>
-                          </div>
+                          <button
+                            type="submit"
+                            className="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail"
+                          >
+                            Add to cart
+                          </button>
                         </div>
-
-                        <button className="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
-                          Add to cart
-                        </button>
                       </div>
                     </div>
-                  </div>
-
+                  </form>
                   <div className="flex-w flex-m p-l-100 p-t-40 respon7">
                     <div className="flex-m bor9 p-r-10 m-r-11">
                       <a
