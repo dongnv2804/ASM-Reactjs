@@ -34,6 +34,7 @@ class App extends Component {
       .catch((err) => console.log(err));
   }
   AddToCart = (e) => {
+    console.log('click');
     e.preventDefault();
     const formData = new FormData(e.target);
     const body = {};
