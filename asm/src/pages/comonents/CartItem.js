@@ -13,7 +13,7 @@ class CartItem extends Component {
           </div>
         </td>
         <td className="column-2">{this.props.value.name}</td>
-        <td className="column-3">$ {this.props.value.price}</td>
+        <td className="column-3">{this.props.value.price}VND</td>
         <td className="column-4">
           <div className="wrap-num-product flex-w m-l-auto m-r-0">
             <div className="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
@@ -31,7 +31,7 @@ class CartItem extends Component {
           </div>
         </td>
         <td className="column-5">
-          $ {this.props.value.price * this.props.value.quantity}
+           {this.props.value.price * this.props.value.quantity} VND
         </td>
       </tr>
     );

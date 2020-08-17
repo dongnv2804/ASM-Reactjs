@@ -11,15 +11,16 @@ import {
   Link,
   NavLink,
 } from "react-router-dom";
-import axios from "axios";
 import api from "./Api";
 import Cart from "./pages/comonents/Cart";
 import ProductDetail from "./pages/comonents/ProductDetail";
+import SweetAlert from "react-bootstrap-sweetalert";
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       carts: [],
+      addcartok: false,
     };
   }
   componentDidMount() {
@@ -34,7 +35,7 @@ class App extends Component {
       .catch((err) => console.log(err));
   }
   AddToCart = (e) => {
-    console.log('click');
+    console.log("click");
     e.preventDefault();
     const formData = new FormData(e.target);
     const body = {};
@@ -42,6 +43,7 @@ class App extends Component {
     api
       .post("/cart/addtocart", body)
       .then((response) => {
+        this.setState({ addcartok: true });
         api
           .get("/cart")
           .then((res) => {
@@ -55,10 +57,20 @@ class App extends Component {
       .catch((err) => console.log(err));
   };
   shouldComponentUpdate = (nextProps, nextState) => {
+    if (this.state.addcartok != nextState.addcartok) {
+       return true;
+    }
     if (JSON.stringify(this.state.carts) == JSON.stringify(nextState.carts)) {
       return false;
     }
     return true;
+  };
+
+  onConfirm = () => {
+    this.setState({ addcartok: false });
+  };
+  onCancel = () => {
+    this.setState({ addcartok: false });
   };
 
   render() {
@@ -68,7 +80,17 @@ class App extends Component {
         totalcount += parseInt(value.quantity);
       });
     }
-
+    let showmessage = (
+      <SweetAlert
+        success
+        show={this.state.addcartok}
+        onConfirm={this.onConfirm}
+        onCancel={this.onCancel}
+        title="OK"
+      >
+        Add to cart successfully !
+      </SweetAlert>
+    );
     return (
       <Router>
         <Header totalcart={totalcount} />
@@ -94,18 +116,7 @@ class App extends Component {
               <ProductDetail addtocart={this.AddToCart} match={match} />
             )}
           ></Route>
-          {/* <div className="container">
-            <form onSubmit={(e) => this.AddToCart(e)}>
-              ID <input className="form-control" name="id" />
-              Size <input className="form-control" name="size" />
-              Color <input className="form-control" name="color" />
-              Price <input className="form-control" name="price" />
-              Quantity <input className="form-control" name="quantity" />
-              <button className="btn btn-primary" type="submit">
-                Click
-              </button>
-            </form>
-          </div> */}
+          {showmessage}
         </div>
         <Footer />
       </Router>

@@ -9,6 +9,7 @@
     "axios": "^0.19.2",
     "jquery": "^3.5.1",
     "react": "^16.13.1",
+    "react-bootstrap-sweetalert": "^5.2.0",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-script-tag": "^1.1.2",

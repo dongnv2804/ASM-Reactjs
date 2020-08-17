@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import api from "../../Api";
+import { Link } from "react-router-dom";
 class ProductDetail extends Component {
+  _isMounted = false;
   constructor(props) {
     super(props);
     this.state = {
@@ -8,6 +10,7 @@ class ProductDetail extends Component {
     };
   }
   componentDidMount() {
+    this._isMounted = true;
     console.log(this.props.match.match.params.id);
     api
       .get(`/product/getdetailproduct/${this.props.match.match.params.id}`)
@@ -20,37 +23,51 @@ class ProductDetail extends Component {
   }
   shouldComponentUpdate(nextProps, nextState) {
     if (
-      JSON.stringify(this.state.product) == JSON.stringify(nextState.product)
+      JSON.stringify(this.state.product) != JSON.stringify(nextState.product)
     ) {
-      return false;
+      return true;
     }
-    return true;
+    return false;
+  }
+  componentWillUnmount() {
+    this._isMounted = false;
   }
   render() {
     let optionsizes = undefined;
-    let optioncolor = undefined;
+    let slcolor = undefined;
+    let optioncolor = [];
+    let arrcolor = [];
     if (this.state.product != null) {
       optionsizes = this.state.product.details.map((item) => {
         return <option defaultValue={item.size}>{item.size}</option>;
       });
-      optioncolor = this.state.product.details.map((item) => {
-        return <option defaultValue={item.color}>{item.color}</option>;
+      this.state.product.details.map((item) => {
+        optioncolor.push(item.color);
+        // return <option defaultValue={item.color}>{item.color}</option>;
+      });
+      arrcolor = optioncolor.filter(function (item, pos) {
+        return optioncolor.indexOf(item) == pos;
+      });
+      slcolor = arrcolor.map((value) => {
+        return <option defaultValue={value}>{value}</option>;
       });
     }
+    console.log(arrcolor);
     return (
       <div id="detail-product">
         <div className="container">
           <div className="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-            <a href="index.html" className="stext-109 cl8 hov-cl1 trans-04">
+            <Link to="/" className="stext-109 cl8 hov-cl1 trans-04">
               Home
               <i
                 className="fa fa-angle-right m-l-9 m-r-10"
                 aria-hidden="true"
               ></i>
-            </a>
-
-            <a href="product.html" className="stext-109 cl8 hov-cl1 trans-04">
-              Men
+            </Link>
+            <a className="stext-109 cl8 hov-cl1 trans-04">
+              {this.state.product != null
+                ? this.state.product.category
+                : undefined}
               <i
                 className="fa fa-angle-right m-l-9 m-r-10"
                 aria-hidden="true"
@@ -187,10 +204,10 @@ class ProductDetail extends Component {
                   </h4>
 
                   <span className="mtext-106 cl2">
-                    $
                     {this.state.product !== null
                       ? this.state.product.price
                       : undefined}
+                    VND
                   </span>
 
                   <p className="stext-102 cl3 p-t-23">
@@ -257,7 +274,7 @@ class ProductDetail extends Component {
                           <div className="rs1-select2 bor8 bg0">
                             <select className="js-select2" name="color">
                               <option>Choose an option</option>
-                              {optioncolor}
+                              {slcolor}
                             </select>
                             <div className="dropDownSelect2"></div>
                           </div>
@@ -517,7 +534,10 @@ class ProductDetail extends Component {
 
                             <div className="row p-b-25">
                               <div className="col-12 p-b-5">
-                                <label className="stext-102 cl3" for="review">
+                                <label
+                                  className="stext-102 cl3"
+                                  htmlFor="review"
+                                >
                                   Your review
                                 </label>
                                 <textarea
