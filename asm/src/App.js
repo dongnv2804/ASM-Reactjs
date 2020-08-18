@@ -25,7 +25,7 @@ class App extends Component {
   }
   componentDidMount() {
     api
-      .get("/cart")
+      .get("/carts")
       .then((res) => {
         const carts = res.data;
         if (carts != null) {
@@ -34,6 +34,13 @@ class App extends Component {
       })
       .catch((err) => console.log(err));
   }
+
+// updateCart = (e) =>
+// {
+//   e.preventDefault();
+//   const formData
+// }
+
   AddToCart = (e) => {
     console.log("click");
     e.preventDefault();
@@ -41,11 +48,11 @@ class App extends Component {
     const body = {};
     formData.forEach((value, property) => (body[property] = value));
     api
-      .post("/cart/addtocart", body)
+      .post("/carts/addtocart", body)
       .then((response) => {
         this.setState({ addcartok: true });
         api
-          .get("/cart")
+          .get("/carts")
           .then((res) => {
             const carts = res.data;
             if (carts != null) {

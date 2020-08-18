@@ -11,7 +11,7 @@ class Cart extends Component {
   }
   componentDidMount() {
     api
-      .get("/cart")
+      .get("/carts")
       .then((res) => {
         const carts = res.data;
         if (carts != null) {

@@ -11,11 +11,11 @@ class ProductDetail extends Component {
   }
   componentDidMount() {
     this._isMounted = true;
-    console.log(this.props.match.match.params.id);
     api
-      .get(`/product/getdetailproduct/${this.props.match.match.params.id}`)
+      .get(`/products/${this.props.match.match.params.id}`)
       .then((res) => {
         if (res.data != null) {
+          console.log(res.data);
           this.setState({ product: res.data });
         }
       })
@@ -38,8 +38,12 @@ class ProductDetail extends Component {
     let optioncolor = [];
     let arrcolor = [];
     if (this.state.product != null) {
-      optionsizes = this.state.product.details.map((item) => {
-        return <option defaultValue={item.size}>{item.size}</option>;
+      optionsizes = this.state.product.details.map((item, index) => {
+        return (
+          <option key={index} defaultValue={item.size}>
+            {item.size}
+          </option>
+        );
       });
       this.state.product.details.map((item) => {
         optioncolor.push(item.color);
@@ -48,11 +52,14 @@ class ProductDetail extends Component {
       arrcolor = optioncolor.filter(function (item, pos) {
         return optioncolor.indexOf(item) == pos;
       });
-      slcolor = arrcolor.map((value) => {
-        return <option defaultValue={value}>{value}</option>;
+      slcolor = arrcolor.map((value, index) => {
+        return (
+          <option key={index} defaultValue={value}>
+            {value}
+          </option>
+        );
       });
     }
-    console.log(arrcolor);
     return (
       <div id="detail-product">
         <div className="container">
@@ -85,7 +92,73 @@ class ProductDetail extends Component {
               <div className="col-md-6 col-lg-7 p-b-30">
                 <div className="p-l-25 p-r-30 p-lr-0-lg">
                   <div className="wrap-slick3 flex-sb flex-w">
-                    <div className="wrap-slick3-dots"></div>
+                    <div className="wrap-slick3-dots">
+                      <div
+                        className="item-slick3"
+                        data-thumb={
+                          this.state.product != null
+                            ? "images/products/" +
+                              this.state.product.imgpaths[0]
+                            : undefined
+                        }
+                      >
+                        <div className="wrap-pic-w pos-relative">
+                          <img
+                            src={
+                              this.state.product != null
+                                ? "images/products/" +
+                                  this.state.product.imgpaths[0]
+                                : undefined
+                            }
+                            alt="IMG-PRODUCT"
+                          />
+                        </div>
+                      </div>
+
+                      <div
+                        className="item-slick3"
+                        data-thumb={
+                          this.state.product != null
+                            ? "images/products/" +
+                              this.state.product.imgpaths[1]
+                            : undefined
+                        }
+                      >
+                        <div className="wrap-pic-w pos-relative">
+                          <img
+                            src={
+                              this.state.product != null
+                                ? "images/products/" +
+                                  this.state.product.imgpaths[1]
+                                : undefined
+                            }
+                            alt="IMG-PRODUCT"
+                          />
+                        </div>
+                      </div>
+
+                      <div
+                        className="item-slick3"
+                        data-thumb={
+                          this.state.product != null
+                            ? "images/products/" +
+                              this.state.product.imgpaths[2]
+                            : undefined
+                        }
+                      >
+                        <div className="wrap-pic-w pos-relative">
+                          <img
+                            src={
+                              this.state.product != null
+                                ? "images/products/" +
+                                  this.state.product.imgpaths[2]
+                                : undefined
+                            }
+                            alt="IMG-PRODUCT"
+                          />
+                        </div>
+                      </div>
+                    </div>
                     <div className="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
                     <div className="slick3 gallery-lb">
@@ -115,74 +188,6 @@ class ProductDetail extends Component {
                               this.state.product != null
                                 ? "images/products/" +
                                   this.state.product.imgpaths[0]
-                                : undefined
-                            }
-                          >
-                            <i className="fa fa-expand"></i>
-                          </a>
-                        </div>
-                      </div>
-
-                      <div
-                        className="item-slick3"
-                        data-thumb={
-                          this.state.product != null
-                            ? "images/products/" +
-                              this.state.product.imgpaths[1]
-                            : undefined
-                        }
-                      >
-                        <div className="wrap-pic-w pos-relative">
-                          <img
-                            src={
-                              this.state.product != null
-                                ? "images/products/" +
-                                  this.state.product.imgpaths[1]
-                                : undefined
-                            }
-                            alt="IMG-PRODUCT"
-                          />
-
-                          <a
-                            className="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                            href={
-                              this.state.product != null
-                                ? "images/products/" +
-                                  this.state.product.imgpaths[1]
-                                : undefined
-                            }
-                          >
-                            <i className="fa fa-expand"></i>
-                          </a>
-                        </div>
-                      </div>
-
-                      <div
-                        className="item-slick3"
-                        data-thumb={
-                          this.state.product != null
-                            ? "images/products/" +
-                              this.state.product.imgpaths[2]
-                            : undefined
-                        }
-                      >
-                        <div className="wrap-pic-w pos-relative">
-                          <img
-                            src={
-                              this.state.product != null
-                                ? "images/products/" +
-                                  this.state.product.imgpaths[2]
-                                : undefined
-                            }
-                            alt="IMG-PRODUCT"
-                          />
-
-                          <a
-                            className="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                            href={
-                              this.state.product != null
-                                ? "images/products/" +
-                                  this.state.product.imgpaths[2]
                                 : undefined
                             }
                           >
@@ -548,7 +553,7 @@ class ProductDetail extends Component {
                               </div>
 
                               <div className="col-sm-6 p-b-5">
-                                <label className="stext-102 cl3" for="name">
+                                <label className="stext-102 cl3" htmlFor="name">
                                   Name
                                 </label>
                                 <input
@@ -560,7 +565,7 @@ class ProductDetail extends Component {
                               </div>
 
                               <div className="col-sm-6 p-b-5">
-                                <label className="stext-102 cl3" for="email">
+                                <label className="stext-102 cl3" htmlFor="email">
                                   Email
                                 </label>
                                 <input
