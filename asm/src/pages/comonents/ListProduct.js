@@ -18,7 +18,7 @@ class ListProduct extends Component {
 
   componentDidMount() {
     api
-      .get("/product")
+      .get("/products")
       .then((res) => {
         const result = res.data;
         if (result != null) {
@@ -27,6 +27,33 @@ class ListProduct extends Component {
       })
       .catch((err) => console.log(err));
   }
+  shouldComponentUpdate = (nextProps, nextState) => {
+    if (
+      JSON.stringify(this.state.listproducts) ==
+      JSON.stringify(nextState.listproducts)
+    ) {
+      return false;
+    }
+    return true;
+  };
+  componentWillUnmount() {
+    this.setState({ listproducts: [] });
+  }
+  filterProduct = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const body = {};
+    formData.forEach((value, property) => (body[property] = value));
+    api
+      .post("/products", body)
+      .then((res) => {
+        const result = res.data;
+        if (result != null) {
+          this.setState({ listproducts: result });
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   render() {
     let elements = this.state.listproducts.map((value) => {
@@ -36,7 +63,7 @@ class ListProduct extends Component {
       <section className="bg0 p-t-23 p-b-140">
         <div className="container">
           {this.props.match.match.path == "/" ? titleIndexpage : undefined}
-          <Filter />
+          <Filter submitfilter={this.filterProduct} />
           <div className="row isotope-grid">{elements}</div>
         </div>
       </section>
