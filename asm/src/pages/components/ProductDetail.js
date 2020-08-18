@@ -356,13 +356,13 @@ class ProductDetail extends Component {
 
             <div className="bor10 m-t-50 p-t-43 p-b-40">
               <div className="tab01">
-                <ul className="nav nav-tabs" role="tablist">
+                <ul className="nav nav-tabs" >
                   <li className="nav-item p-b-10">
                     <a
                       className="nav-link active"
                       data-toggle="tab"
                       href="#description"
-                      role="tab"
+                    
                     >
                       Description
                     </a>
@@ -373,7 +373,7 @@ class ProductDetail extends Component {
                       className="nav-link"
                       data-toggle="tab"
                       href="#information"
-                      role="tab"
+                      
                     >
                       Additional information
                     </a>
@@ -384,7 +384,7 @@ class ProductDetail extends Component {
                       className="nav-link"
                       data-toggle="tab"
                       href="#reviews"
-                      role="tab"
+                      
                     >
                       Reviews (1)
                     </a>
@@ -395,7 +395,7 @@ class ProductDetail extends Component {
                   <div
                     className="tab-pane fade show active"
                     id="description"
-                    role="tabpanel"
+                    
                   >
                     <div className="how-pos2 p-lr-15-md">
                       <p className="stext-102 cl6">
@@ -419,7 +419,7 @@ class ProductDetail extends Component {
                   <div
                     className="tab-pane fade"
                     id="information"
-                    role="tabpanel"
+                    
                   >
                     <div className="row">
                       <div className="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
@@ -476,7 +476,7 @@ class ProductDetail extends Component {
                     </div>
                   </div>
 
-                  <div className="tab-pane fade" id="reviews" role="tabpanel">
+                  <div className="tab-pane fade" id="reviews" >
                     <div className="row">
                       <div className="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
                         <div className="p-b-30 m-lr-15-sm">

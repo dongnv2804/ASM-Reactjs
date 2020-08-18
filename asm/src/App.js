@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Banner from "./pages/header/Banner";
-import ListProduct from "./pages/comonents/ListProduct";
-import CartModal from "./pages/comonents/CartModal";
+import ListProduct from "./pages/components/ListProduct";
+import CartModal from "./pages/components/CartModal";
 import Header from "./pages/header/Header";
 import Slider from "./pages/header/Slider";
 import Footer from "./pages/footer/Footer";
@@ -12,8 +12,8 @@ import {
   NavLink,
 } from "react-router-dom";
 import api from "./Api";
-import Cart from "./pages/comonents/Cart";
-import ProductDetail from "./pages/comonents/ProductDetail";
+import Cart from "./pages/components/Cart";
+import ProductDetail from "./pages/components/ProductDetail";
 import SweetAlert from "react-bootstrap-sweetalert";
 class App extends Component {
   constructor(props) {
